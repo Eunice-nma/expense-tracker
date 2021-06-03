@@ -10,14 +10,16 @@ class CustomTextField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
   final bool enabled;
+  final Function onChanged;
 
 
-  CustomTextField({this.placeHolder, this.textInputType, this.textInputFormatter, this.label, this.controller, this.enabled});
+  CustomTextField({this.placeHolder, this.textInputType, this.textInputFormatter, this.label, this.controller, this.enabled, this.onChanged});
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: TextFormField(
+        onChanged: onChanged,
         enabled: enabled,
         controller: controller,
         inputFormatters: [textInputFormatter],

@@ -2,13 +2,16 @@ import 'package:expense_tracker/customWidget/dismissibleWidget.dart';
 import 'package:expense_tracker/utilities/expenseItem.dart';
 import 'package:flutter/material.dart';
 import '../utilities/constant.dart';
+import 'package:intl/intl.dart';
 
 class ETCard extends StatelessWidget {
- final ExpenseItem expenseItem;
- final int item;
- final DismissDirectionCallback onDismissed;
+  final ExpenseItem expenseItem;
+  final int item;
+  final DismissDirectionCallback onDismissed;
 
- ETCard({this.expenseItem, this.item, this.onDismissed});
+  final formatter = NumberFormat('###,###,##0.00');
+
+  ETCard({this.expenseItem, this.item, this.onDismissed});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,8 +26,21 @@ class ETCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(expenseItem.expenseName, style: kRegularText,),
-                Text('N${expenseItem.expenseCost}', style: kRegularText,)
+                Expanded(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                  expenseItem.expenseName,
+                  style: kRegularText,
+                ),
+                    )),
+                Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                        child: Text(
+                  'N${formatter.format(expenseItem.expenseCost)}',
+                  style: kRegularText,
+                )))
               ],
             ),
           ),
