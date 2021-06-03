@@ -120,17 +120,18 @@ class _AddExpensesState extends State<AddExpenses> {
         isWeekly = false;
         isCustom = false;
       }
-    } else if (buttonType == ButtonType.custom) {
-      if (isCustom) {
-        isCustom = false;
-      } else {
-        isCustom = true;
-        isDaily = false;
-        isMonthly = false;
-        isFortnightly = false;
-        isWeekly = false;
-      }
     }
+    // else if (buttonType == ButtonType.custom) {
+    //   if (isCustom) {
+    //     isCustom = false;
+    //   } else {
+    //     isCustom = true;
+    //     isDaily = false;
+    //     isMonthly = false;
+    //     isFortnightly = false;
+    //     isWeekly = false;
+    //   }
+    // }
   }
 
   @override
@@ -320,19 +321,19 @@ class _AddExpensesState extends State<AddExpenses> {
                   SizedBox(
                     height: 30.0,
                   ),
-                  CustomButton(
-                    onPressed: () {
-                      setState(() {
-                        //Function call to update button color
-                        updateButton(ButtonType.custom);
-                        //Function call to check for the activation of the done button
-                        doneButtonActivation();
-                      });
-                    },
-                    child: 'Custom Period',
-                    width: 100,
-                    isActive: isCustom,
-                  ),
+                  // CustomButton(
+                  //   onPressed: () {
+                  //     setState(() {
+                  //       //Function call to update button color
+                  //       updateButton(ButtonType.custom);
+                  //       //Function call to check for the activation of the done button
+                  //       doneButtonActivation();
+                  //     });
+                  //   },
+                  //   child: 'Custom Period',
+                  //   width: 100,
+                  //   isActive: isCustom,
+                  // ),
                 ],
               ),
             ),
