@@ -25,6 +25,7 @@ class CustomTextField extends StatelessWidget {
         inputFormatters: [textInputFormatter],
         keyboardType: textInputType,
         cursorColor: kDarkGrey,
+        style: Theme.of(context).textTheme.bodyText1,
         decoration: InputDecoration(
           // labelText: label,
           border: OutlineInputBorder(
@@ -39,7 +40,7 @@ class CustomTextField extends StatelessWidget {
           filled: true,
           hintText: placeHolder,
           hintStyle: kLightText,
-          fillColor: kLightGrey,
+          // fillColor: kLightGrey,
         ),
       ),
     );

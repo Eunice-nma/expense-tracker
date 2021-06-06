@@ -2,13 +2,16 @@ import 'package:expense_tracker/customWidget/emptyScreen.dart';
 import 'package:expense_tracker/customWidget/slideUpPanel.dart';
 import 'package:expense_tracker/utilities/expenseItem.dart';
 import 'package:expense_tracker/Screens/addExpenses.dart';
+import 'package:expense_tracker/utilities/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../customWidget/appbar.dart';
 import '../customWidget/card.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:intl/intl.dart';
 
 enum ButtonType { daily, monthly, fortnightly, weekly, custom, year }
+enum Theme { light, dark }
 
 class Home extends StatefulWidget {
   @override
@@ -36,6 +39,9 @@ class _HomeState extends State<Home> {
   bool isMonth = false;
   bool isYear = false;
   bool isWeek = false;
+  bool isLight = false;
+  bool isDark = true;
+  bool isDarkModeOn = true;
 
   //Format numbers to put commas in the appropriate places
   var formatter = NumberFormat('###,###,##0.00');
@@ -71,30 +77,54 @@ class _HomeState extends State<Home> {
   void checkActiveButton() {
     if (isDay) {
       total = daySum;
+      selectedPeriod = "Day";
+      print("Day: $selectedPeriod");
     } else if (isWeek) {
       total = daySum * 7;
+      selectedPeriod = "Week";
+      print("week: $selectedPeriod");
     } else if (isMonth) {
       total = daySum * (365 / 12);
+      selectedPeriod = "Month";
+      print("Month: $selectedPeriod");
     } else if (isYear) {
       total = daySum * 365;
+      selectedPeriod = "Year";
+      print("year: $selectedPeriod");
     }
   }
 
   //Function to check what button is active,
   //calculate the total and change the period Text accordingly
-  void buttonFunctions(
-      ButtonType buttonType, double numOfDays, String selectedPeriod) {
+  void buttonFunctions(ButtonType buttonType) {
     setState(() {
       updateButton(buttonType);
-      selectedPeriod = selectedPeriod;
-      total = daySum * numOfDays;
+      checkActiveButton();
     });
+  }
+
+  //Function to check what theme button was pressed by
+  //comparing it with the enums and updating the theme accordingly
+  updateTheme(Theme themeButton) {
+    AppTheme appTheme = Provider.of<AppTheme>(context, listen: false);
+    setState(() {
+      if (themeButton == Theme.dark) {
+        isDarkModeOn = true;
+        isDark = true;
+        isLight = false;
+      } else if (themeButton == Theme.light) {
+        isDarkModeOn = false;
+        isLight = true;
+        isDark = false;
+      }
+    });
+    appTheme.swapTheme(isDarkModeOn);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: ETAppBar(
         action: IconButton(
           icon: Icon(
@@ -109,7 +139,7 @@ class _HomeState extends State<Home> {
       ),
       body: SlidingUpPanel(
         minHeight: 90,
-        maxHeight: 350,
+        maxHeight: 380,
         borderRadius: BorderRadius.circular(20),
         panel: SlideUpPanel(
           selectedPeriod: selectedPeriod,
@@ -118,17 +148,25 @@ class _HomeState extends State<Home> {
           isMonth: isMonth,
           isWeek: isWeek,
           isYear: isYear,
+          isLight: isLight,
+          isDark: isDark,
+          lightModeFunction: () {
+            updateTheme(Theme.light);
+          },
+          darkModeFunction: () {
+            updateTheme(Theme.dark);
+          },
           dayFunction: () {
-            buttonFunctions(ButtonType.daily, 1.0, 'Day');
+            buttonFunctions(ButtonType.daily);
           },
           weekFunction: () {
-            buttonFunctions(ButtonType.weekly, 7.0, 'Week');
+            buttonFunctions(ButtonType.weekly);
           },
           monthFunction: () {
-            buttonFunctions(ButtonType.monthly, 365 / 12, 'Month');
+            buttonFunctions(ButtonType.monthly);
           },
           yearFunction: () {
-            buttonFunctions(ButtonType.year, 365, 'Year');
+            buttonFunctions(ButtonType.year);
           },
         ),
         //Ternary operator to check if the expenseItem list is empty

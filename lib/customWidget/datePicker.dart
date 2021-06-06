@@ -1,3 +1,4 @@
+import 'package:expense_tracker/utilities/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,12 +12,20 @@ class DatePicker extends StatelessWidget {
     return Container(
       child: SizedBox(
         height: 200,
-        child: CupertinoDatePicker(
-          initialDateTime: date,
-          mode: CupertinoDatePickerMode.date,
-          onDateTimeChanged: onTimeChange,
-          maximumDate: DateTime.now(),
-          minimumYear: 1999,
+        child: CupertinoTheme(
+          data: CupertinoThemeData(
+            textTheme: CupertinoTextThemeData(
+              dateTimePickerTextStyle: Theme.of(context).textTheme.bodyText1,
+            ),
+          ),
+          child: CupertinoDatePicker(
+            initialDateTime: date,
+            mode: CupertinoDatePickerMode.date,
+            onDateTimeChanged: onTimeChange,
+            maximumDate: DateTime.now(),
+            minimumYear: 1999,
+            // backgroundColor: Theme.of(context).accentColor,
+          ),
         ),
       ),
     );

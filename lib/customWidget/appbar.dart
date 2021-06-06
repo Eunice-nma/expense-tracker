@@ -20,10 +20,10 @@ class _ETAppBarState extends State<ETAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       iconTheme: IconThemeData(
-        color: kDarkGrey,
+        // color: kDarkGrey,
         size: 30,
       ),
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       elevation: 0,
       title: Text(
         widget.title,

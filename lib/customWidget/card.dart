@@ -17,7 +17,7 @@ class ETCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Card(
-        color: kOffWhite,
+        // color: kOffWhite,
         child: DismissibleWidget(
           onDismissed: onDismissed,
           item: item,
@@ -31,7 +31,7 @@ class ETCard extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                   expenseItem.expenseName,
-                  style: kRegularText,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                     )),
                 Expanded(
@@ -39,7 +39,7 @@ class ETCard extends StatelessWidget {
                       alignment: Alignment.centerRight,
                         child: Text(
                   'N${formatter.format(expenseItem.expenseCost)}',
-                  style: kRegularText,
+                  style: Theme.of(context).textTheme.bodyText1,
                 )))
               ],
             ),

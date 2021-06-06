@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-const kPurple = Color(0XFFBF5FFF);
+const kPurple = Color(0XD9BF5FFF);
 const kOffWhite = Color(0XFFF9F9F9);
 const kLightGrey = Color(0XFFF5F5F5);
 const kDarkGrey = Color(0XFF464648);
 const kGrey = Color(0XFF535353);
-const kLightPurple = Color(0XFFE3B9FF);
+// const kLightPurple = Color(0XFFE3B9FF);
+const kLightPurple = Color(0X59BF5FFF);
+const kBlack = Color(0XFF0E0E0E);
+const kBlack1 = Color(0XFF161616);
 
 const kTitleText = TextStyle(
   color: kPurple,

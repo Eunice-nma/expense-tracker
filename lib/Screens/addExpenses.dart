@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'home.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
+
 class AddExpenses extends StatefulWidget {
   @override
   _AddExpensesState createState() => _AddExpensesState();
@@ -79,7 +80,6 @@ class _AddExpensesState extends State<AddExpenses> {
     //Compare the enum assigned to the button clicked to see what button what clicked on,
     //check if the button is already active, deactivate if true,
     // else activate it and deactivate every other button that might be activated.
-    //TODO: Try and see if this can be converted to a switch Statement
     if (buttonType == ButtonType.daily) {
       if (isDaily) {
         isDaily = false;
@@ -137,13 +137,13 @@ class _AddExpensesState extends State<AddExpenses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: ETAppBar(
         action: TextButton(
           child: Text(
             'done',
             //Check if the done button is active or not, change the style accordingly
-            style: doneButtonActivated ? kRegularText : kGreyText,
+            style: doneButtonActivated ?  kPurpleText: kGreyText,
           ),
           //check if the done button is active,
           // make the onPressed function null if the button is not active,
@@ -165,7 +165,7 @@ class _AddExpensesState extends State<AddExpenses> {
       body: Container(
         padding: EdgeInsets.fromLTRB(24, 20, 24, 100),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomTextField(
                 placeHolder: 'Expense Name',
@@ -194,10 +194,20 @@ class _AddExpensesState extends State<AddExpenses> {
                     doneButtonActivation();
                   });
                 }),
+            SizedBox(
+              height: 20.0,
+            ),
+            Text(
+              'Last Billing Date',
+              style: kLightText,
+            ),
             GestureDetector(
               //Make this text field clickable so the date picker can be displayed when it is tapped on
               onTap: () {
                 _dateController.text="${DateFormat('d MMMM y').format(_date)}";
+                setState(() {
+                  doneButtonActivation();
+                });
                 //A popup model that contains the date picker as a child,
                 // with a done button to remove the model
                 showSheet(context,
@@ -228,7 +238,7 @@ class _AddExpensesState extends State<AddExpenses> {
               },
               child: CustomTextField(
                 enabled: false,
-                placeHolder: 'Last Billing Date',
+                placeHolder: 'Date',
                 textInputFormatter:
                     FilteringTextInputFormatter.singleLineFormatter,
                 textInputType: TextInputType.datetime,
@@ -238,103 +248,105 @@ class _AddExpensesState extends State<AddExpenses> {
             SizedBox(
               height: 30.0,
             ),
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Choose a Billing period',
-                    style: kLightText,
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomButton(
-                        onPressed: () {
-                          setState(() {
-                            //Function call to update button color
-                            updateButton(ButtonType.daily);
-                            period = 1.0;
-                            //Function call to check for the activation of the done button
-                            doneButtonActivation();
-                          });
-                        },
-                        child: 'Daily',
-                        width: 40,
-                        isActive: isDaily,
-                      ),
-                      CustomButton(
-                        onPressed: () {
-                          setState(() {
-                            //Function call to update button color
-                            updateButton(ButtonType.weekly);
-                            period = 7.0;
-                            //Function call to check for the activation of the done button
-                            doneButtonActivation();
-                          });
-                        },
-                        child: 'Weekly',
-                        width: 40,
-                        isActive: isWeekly,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomButton(
-                        onPressed: () {
-                          setState(() {
-                            //Function call to update button color
-                            updateButton(ButtonType.fortnightly);
-                            period = 14.0;
-                            //Function call to check for the activation of the done button
-                            doneButtonActivation();
-                          });
-                        },
-                        child: 'Fortnightly',
-                        width: 40,
-                        isActive: isFortnightly,
-                      ),
-                      CustomButton(
-                        onPressed: () {
-                          setState(() {
-                            //Function call to update button color
-                            updateButton(ButtonType.monthly);
-                            period = 30.4;
-                            //Function call to check for the activation of the done button
-                            doneButtonActivation();
-                          });
-                        },
-                        child: 'Monthly',
-                        width: 40,
-                        isActive: isMonthly,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  // CustomButton(
-                  //   onPressed: () {
-                  //     setState(() {
-                  //       //Function call to update button color
-                  //       updateButton(ButtonType.custom);
-                  //       //Function call to check for the activation of the done button
-                  //       doneButtonActivation();
-                  //     });
-                  //   },
-                  //   child: 'Custom Period',
-                  //   width: 100,
-                  //   isActive: isCustom,
-                  // ),
-                ],
+            Expanded(
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Choose a Billing period',
+                      style: kLightText,
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomButton(
+                          onPressed: () {
+                            setState(() {
+                              //Function call to update button color
+                              updateButton(ButtonType.daily);
+                              period = 1.0;
+                              //Function call to check for the activation of the done button
+                              doneButtonActivation();
+                            });
+                          },
+                          child: 'Daily',
+                          width: 40,
+                          isActive: isDaily,
+                        ),
+                        CustomButton(
+                          onPressed: () {
+                            setState(() {
+                              //Function call to update button color
+                              updateButton(ButtonType.weekly);
+                              period = 7.0;
+                              //Function call to check for the activation of the done button
+                              doneButtonActivation();
+                            });
+                          },
+                          child: 'Weekly',
+                          width: 40,
+                          isActive: isWeekly,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomButton(
+                          onPressed: () {
+                            setState(() {
+                              //Function call to update button color
+                              updateButton(ButtonType.fortnightly);
+                              period = 14.0;
+                              //Function call to check for the activation of the done button
+                              doneButtonActivation();
+                            });
+                          },
+                          child: 'Fortnightly',
+                          width: 40,
+                          isActive: isFortnightly,
+                        ),
+                        CustomButton(
+                          onPressed: () {
+                            setState(() {
+                              //Function call to update button color
+                              updateButton(ButtonType.monthly);
+                              period = 30.4;
+                              //Function call to check for the activation of the done button
+                              doneButtonActivation();
+                            });
+                          },
+                          child: 'Monthly',
+                          width: 40,
+                          isActive: isMonthly,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    // CustomButton(
+                    //   onPressed: () {
+                    //     setState(() {
+                    //       //Function call to update button color
+                    //       updateButton(ButtonType.custom);
+                    //       //Function call to check for the activation of the done button
+                    //       doneButtonActivation();
+                    //     });
+                    //   },
+                    //   child: 'Custom Period',
+                    //   width: 100,
+                    //   isActive: isCustom,
+                    // ),
+                  ],
+                ),
               ),
             ),
           ],

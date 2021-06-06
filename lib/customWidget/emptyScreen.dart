@@ -30,7 +30,7 @@ class EmptyScreen extends StatelessWidget {
           ),
           Text(
             'Looks like you haven\'t added \n any expense',
-            style: kRegularText,
+            style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
           Text(

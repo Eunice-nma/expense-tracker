@@ -20,13 +20,15 @@ class CustomButton extends StatelessWidget {
       ),
       child: Text(
         child,
-        style: isActive ? kPurpleText : kRegularText,
+        // style: isActive ? kPurpleText : kRegularText,
+        style: isActive ? Theme.of(context).textTheme.button : kLightText,
       ),
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5.0),
       ),
-      fillColor: isActive ? kLightPurple : kLightGrey,
+      // fillColor: isActive ? kLightPurple : kLightGrey,
+      fillColor: isActive ? Theme.of(context).buttonColor : Theme.of(context).accentColor,
       onPressed: onPressed,
     );
   }
